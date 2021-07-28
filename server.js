@@ -32,7 +32,8 @@ app.get("/api/hello", function (req, res) {
  
 
   } else {
-    
+        input = parseInt(input)
+
      responseObject1 = new Date(input).getTime();
      responseObject = new Date(input).toUTCString();
     
