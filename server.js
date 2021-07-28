@@ -22,26 +22,38 @@ app.get("/", function (req, res) {
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
-});
-
-app.get('/api/:date', (req,res)=>{
+});app.get('/api/:date', (req,res)=>{
   var input = req.params.date
-  if (input.includes('-')){
+
+  if (input.includes('-'|| ' ' || '/')){
   
   responseObject1 = new Date(input).getTime();
   responseObject = new Date(input).toUTCString();
  
-  } else {
-    input = parseInt(input)
 
+  } else {
+    
      responseObject1 = new Date(input).getTime();
      responseObject = new Date(input).toUTCString();
-  }
-  if (!responseObject || !responseObject1) {
+    
+
+     if(responseObject1 === 0 ){
+       res.json({"unix": responseObject1, "utc": responseObject })
+      
+     }
+      if(responseObject === 0 ){
+       res.json({"unix": responseObject1, "utc": responseObject })
+      
+     }
+
+  } 
+  if (responseObject == "Invalid Date"  ){
     res.json({ error : "Invalid Date" })
   }
+
   res.json({"unix": responseObject1, "utc": responseObject })
 })
+
 
 app.get('/api', (req,res) => {
   responseObject = new Date().getTime();
