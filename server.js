@@ -25,31 +25,21 @@ app.get("/api/hello", function (req, res) {
 });app.get('/api/:date', (req,res)=>{
   var input = req.params.date
 
-  if (input.includes('-'|| ' ' || '/')){
-  
-  responseObject1 = new Date(input).getTime();
-  responseObject = new Date(input).toUTCString();
- 
+  if (parseInt(input) > 10000 ) {
+    var input = parseInt(input)
 
-  } else {
-        input = parseInt(input)
-
-     responseObject1 = new Date(input).getTime();
-     responseObject = new Date(input).toUTCString();
-    
-
-     if(responseObject1 === 0 ){
-       res.json({"unix": responseObject1, "utc": responseObject })
-      
-     }
-      if(responseObject === 0 ){
-       res.json({"unix": responseObject1, "utc": responseObject })
-      
-     }
-
+      responseObject1 = new Date(input).getTime();
+      responseObject = new Date(input).toUTCString();
   } 
-  if (responseObject == "Invalid Date"  ){
+  else {
+
+   
+    responseObject1 = Date.parse(input);
+    responseObject = new Date(input).toUTCString();
+    
+    if (responseObject == "Invalid Date"  ){
     res.json({ error : "Invalid Date" })
+  }
   }
 
   res.json({"unix": responseObject1, "utc": responseObject })
